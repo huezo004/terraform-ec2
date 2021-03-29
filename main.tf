@@ -1,3 +1,7 @@
+
+//EC2 server with simple script deployed trough Terraform
+
+
 resource "aws_instance" "example" {
   ami                    =  "ami-0533f2ba8a1995cf9"
   instance_type          = "t2.micro"
@@ -10,13 +14,13 @@ resource "aws_instance" "example" {
               nohup busybox httpd -f -p 8080 &
               EOF
 
-  tags = {
+  tags = { 
     Name = "Denyse-ec2-example"
   }
 }
 
 
-resource "aws_security_group" "SGDenyseEC2" {
+resource "aws_security_group" "SGDenyseEC2" { //Security Group to allow connections to server
   name = "terraform-example-instance"
 
   ingress {
@@ -27,7 +31,7 @@ resource "aws_security_group" "SGDenyseEC2" {
   }
 }
 
-output "public_ip" {
+output "public_ip" { //Outputs IP Address
   value       = aws_instance.example.public_ip
   description = "The public IP address of the web server"
 }
